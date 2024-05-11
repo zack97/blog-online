@@ -1,0 +1,18 @@
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(45) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    img VARCHAR(255)
+);
+
+CREATE TABLE posts (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description VARCHAR(1000) NOT NULL,
+    img VARCHAR(255) NOT NULL,
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    uid INT,
+    cat VARCHAR(45),
+    FOREIGN KEY (uid) REFERENCES users(id)
+);
