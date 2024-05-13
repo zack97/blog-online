@@ -57,7 +57,7 @@ export const login = async (req, res) => {
         httpOnly: true,
       })
       .status(200)
-      .json({ message: "Login successful", other });
+      .json({ message: "Login successful", other, token });
   } catch (error) {
     console.error("Error logging in:", error);
     return res.status(500).json({ error: "Internal server error" });

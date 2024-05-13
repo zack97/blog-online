@@ -12,10 +12,10 @@ app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
-app.use("/api/posts", postRoutes);
+app.use("/api/auth/posts", postRoutes);
 
 const PORT = process.env.PORT || 8800;
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port $8800`);
+  console.log(`Server is running on port ${PORT}`);
 });
