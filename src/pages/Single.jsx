@@ -16,7 +16,7 @@ function Single() {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/api/auth/posts/${postId}`
+          `https://blog-backend1-ce510227abd3.herokuapp.com/api/auth/posts/${postId}`
         );
         setPost(res.data);
       } catch (err) {
@@ -42,7 +42,7 @@ function Single() {
       };
 
       const res = await axios.delete(
-        `http://localhost:8800/api/auth/posts/${postId}`,
+        `https://blog-backend1-ce510227abd3.herokuapp.com/api/auth/posts/${postId}`,
         config
       );
 

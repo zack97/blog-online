@@ -12,7 +12,7 @@ export const AuthContextProvider = ({ children }) => {
   const login = async (inputs) => {
     try {
       const res = await axios.post(
-        "http://localhost:8800/api/auth/login",
+        "https://blog-backend1-ce510227abd3.herokuapp.com/api/auth/login",
         inputs
       );
       const userData = res.data;
@@ -30,7 +30,9 @@ export const AuthContextProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await axios.post("http://localhost:8800/api/auth/logout");
+      await axios.post(
+        "https://blog-backend1-ce510227abd3.herokuapp.com/api/auth/logout"
+      );
       setCurrentUser(null);
 
       // Remove token from local storage

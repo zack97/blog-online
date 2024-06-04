@@ -20,7 +20,10 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8800/api/auth/register", inputs);
+      await axios.post(
+        "https://blog-backend1-ce510227abd3.herokuapp.com/api/auth/register",
+        inputs
+      );
       navigate("/login");
     } catch (err) {
       if (err.response) {

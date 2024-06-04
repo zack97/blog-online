@@ -4,12 +4,11 @@ import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useLocation } from "react-router-dom";
-// import jwt from "jsonwebtoken";
 
 function Write() {
   const state = useLocation().state;
-  const [value, setValue] = useState(state?.title || "");
-  const [title, setTitle] = useState(state?.description || "");
+  const [value, setValue] = useState(state?.description || "");
+  const [title, setTitle] = useState(state?.title || "");
   const [file, setFile] = useState(null);
   const [cat, setCat] = useState(state?.cat || "");
 
@@ -18,10 +17,10 @@ function Write() {
       const formData = new FormData();
       formData.append("file", file);
       const res = await axios.post(
-        "http://localhost:8800/api/auth/upload",
+        "https://blog-backend1-ce510227abd3.herokuapp.com/api/auth/upload",
         formData
       );
-      return res.data;
+      return res.data.url; // Ensure you're returning the URL
     } catch (err) {
       console.log(err);
     }
@@ -29,25 +28,31 @@ function Write() {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    const imgUrl = upload();
+    const imgUrl = file ? await upload() : ""; // Ensure the file URL is obtained before proceeding
 
     try {
-      state
-        ? await axios.put(`http://localhost:8800/api/auth/posts/${state.id}`, {
-            title,
-            description: value,
-            cat,
-            img: file ? imgUrl : "",
-          })
-        : await axios.post(`http://localhost:8800/api/auth/posts/`, {
-            title,
-            description: value,
-            cat,
-            img: file ? imgUrl : "",
-            data: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
-          });
+      const postData = {
+        title,
+        description: value,
+        cat,
+        img: imgUrl,
+        date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
+      };
+      if (state) {
+        await axios.put(
+          `https://blog-backend1-ce510227abd3.herokuapp.com/api/auth/posts/${state.id}`,
+          postData
+        );
+      } else {
+        await axios.post(
+          `https://blog-backend1-ce510227abd3.herokuapp.com/api/auth/posts/`,
+          postData
+        );
+      }
+      // Optionally, provide user feedback here (e.g., success message)
     } catch (err) {
-      console.log(err);
+      console.error(err);
+      // Optionally, provide user feedback here (e.g., error message)
     }
   };
 
@@ -70,13 +75,13 @@ function Write() {
         </div>
       </div>
       <div className="menu">
-        <div className="item ">
+        <div className="item">
           <h1>Publish</h1>
           <span>
-            <b>Status</b> Draft
+            <b>Status:</b> Draft
           </span>
           <span>
-            <b>Visibility</b> Public
+            <b>Visibility:</b> Public
           </span>
           <input
             style={{ display: "none" }}
@@ -115,7 +120,7 @@ function Write() {
               id="science"
               onChange={(e) => setCat(e.target.value)}
             />
-            <label htmlFor="art">Science</label>
+            <label htmlFor="science">Science</label>
           </div>
           <div className="cat">
             <input
@@ -126,7 +131,7 @@ function Write() {
               id="technology"
               onChange={(e) => setCat(e.target.value)}
             />
-            <label htmlFor="art">Technology</label>
+            <label htmlFor="technology">Technology</label>
           </div>
           <div className="cat">
             <input
@@ -137,7 +142,7 @@ function Write() {
               id="cinema"
               onChange={(e) => setCat(e.target.value)}
             />
-            <label htmlFor="art">Cinema</label>
+            <label htmlFor="cinema">Cinema</label>
           </div>
           <div className="cat">
             <input
@@ -148,7 +153,7 @@ function Write() {
               id="design"
               onChange={(e) => setCat(e.target.value)}
             />
-            <label htmlFor="art">Design</label>
+            <label htmlFor="design">Design</label>
           </div>
           <div className="cat">
             <input
@@ -159,7 +164,7 @@ function Write() {
               id="food"
               onChange={(e) => setCat(e.target.value)}
             />
-            <label htmlFor="art">Food</label>
+            <label htmlFor="food">Food</label>
           </div>
         </div>
       </div>

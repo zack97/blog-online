@@ -8,7 +8,7 @@ function Menu({ cat = "" }) {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/api/auth/posts/?cat=${cat}`
+          `https://blog-backend1-ce510227abd3.herokuapp.com/api/auth/posts/?cat=${cat}`
         );
         setPosts(res.data);
       } catch (err) {
