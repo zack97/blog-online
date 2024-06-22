@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 
+//mycode
 function Home() {
   const [posts, setPosts] = useState([]);
 
@@ -44,3 +45,5 @@ function Home() {
 }
 
 export default Home;
+
+
